@@ -81,14 +81,16 @@ def create(**kwargs):
 def generate(**kwargs):    
     directory_absolute = kwargs.get("directory_absolute")
     configuration = kwargs.get("configuration")
-    file_keep_list = configuration.get("file_keep_list", [])
-    file_list_current_directory = os.listdir(directory_absolute)
-    for file in file_list_current_directory:
-        if file not in file_keep_list:
-            file_absolute = os.path.join(directory_absolute, file)
-            if os.path.isfile(file_absolute):
-                os.remove(file_absolute)
-                print(f"removed {file_absolute}")
+    if configuration != None:
+        file_keep_list = configuration.get("file_keep_list", [])
+        file_list_current_directory = os.listdir(directory_absolute)
+        if file_keep_list != []:
+            for file in file_list_current_directory:
+                if file not in file_keep_list:
+                    file_absolute = os.path.join(directory_absolute, file)
+                    if os.path.isfile(file_absolute):
+                        os.remove(file_absolute)
+                        print(f"removed {file_absolute}")
 
 if __name__ == '__main__':
     #folder is the path it was launched from
